@@ -1,15 +1,12 @@
-import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite'
+import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
-  plugins:[ 
+  plugins: [
     laravel({
-    input: 
-       ['resource/css/app.css','resource/js/app.js'],
-      refresh:true // adjust path as needed
-    ,
-    
-  }),
-    tailwindcss()],
+      input: ['resources/css/app.css', 'resources/js/app.js'],
+      buildDirectory: 'dist',  // custom folder
+      refresh: true,
+    }),
+  ],
 });
