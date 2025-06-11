@@ -10,4 +10,14 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public function index()
+{
+    $user = auth()->user();
+
+    $completedTasks = $user->tasks()->where('status', 'completed')->count();
+    $pendingTasks = $user->tasks()->where('status', 'pending')->count();
+
+    // Iba pang code...
+}
+
 }

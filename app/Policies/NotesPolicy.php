@@ -4,63 +4,38 @@ namespace App\Policies;
 
 use App\Models\Note;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class NotesPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user can view the note.
      */
-    public function viewAny(User $user): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Note $note): bool
+    public function view(User $user, Note $note)
     {
         return $user->id === $note->user_id;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can create notes.
      */
-    public function create(User $user): bool
+    public function create(User $user)
     {
-        return false;
+        return true; // Lahat ng authenticated users ay pwedeng gumawa ng note
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can update the note.
      */
-    public function update(User $user, Note $note): bool
+    public function update(User $user, Note $note)
     {
         return $user->id === $note->user_id;
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Determine whether the user can delete the note.
      */
-    public function delete(User $user, Note $note): bool
+    public function delete(User $user, Note $note)
     {
         return $user->id === $note->user_id;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Note $note): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Note $note): bool
-    {
-        return false;
     }
 }

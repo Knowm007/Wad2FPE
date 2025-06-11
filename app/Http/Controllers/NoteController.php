@@ -44,26 +44,13 @@ class NoteController extends Controller
 
     public function edit(Note $note)
     {
-        if (!Auth()->check()){
-            return redirect()->route('login');
-        }
-        $this->authorize('update-note', $note);
-        if (Gate::denies('update-note', $note)) {
-            abort(403, 'You are not authorized to delete this note.');
-        }
-
+        Gate::authorize('update-note', $note);
         return view('notes.edit', compact('note'));
     }
 
     public function update(NoteRequest $request, Note $note)
     {
-        if (!Auth()->check()){
-            return redirect()->route('login');
-        }
-        $this->authorize('update-note', $note);
-        if (Gate::denies('update-note', $note)) {
-            abort(403, 'You are not authorized to delete this note.');
-        }
+        Gate::authorize('update-note', $note);
 
         $note->update($request->validated());
         return redirect('/notes')->with('success', 'Note updated successfully!');
@@ -71,9 +58,7 @@ class NoteController extends Controller
 
     public function destroy(Note $note)
     {
-        if (Gate::authorize('delete-note', $note)) {
-            abort(403, 'You are not allowed to delete');
-        }
+        Gate::authorize('delete-note', $note);
 
         $note->delete();
         return redirect('/notes')->with('success', 'Note deleted successfully!');

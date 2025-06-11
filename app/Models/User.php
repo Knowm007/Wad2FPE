@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Task;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+
+
 
 class User extends Authenticatable
 {
@@ -37,5 +42,16 @@ class User extends Authenticatable
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
+    }
+    use HasFactory, Notifiable;
+
+    // Iba pang properties at methods ng User model
+
+    /**
+     * Get the tasks for the user.
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }
